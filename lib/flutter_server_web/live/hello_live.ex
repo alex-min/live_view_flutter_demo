@@ -2,8 +2,11 @@ defmodule FlutterServerWeb.HelloLive do
   use Phoenix.LiveView
   use LiveViewNative.LiveView
 
+  @topic "hello_live"
+
   @impl true
   def mount(_params, _session, socket) do
+    FlutterServerWeb.Endpoint.subscribe(@topic)
     {:ok, assign(socket, form_field: "", counter: 0, form: to_form(%{}, as: "user"))}
   end
 
@@ -23,7 +26,7 @@ defmodule FlutterServerWeb.HelloLive do
       <Container padding={10 + @counter} decoration={bg_color(@counter)}>
         <Form phx-change="validate" phx-submit="save">
           <ListView>
-            <Container decoration="background: white">
+            <Container decoration="background: blue">
               <TextField decoration="fillColor: white; filled: true" name="myfield" value={"Current margin #{@counter}"}>
                 <icon>
                   <Container decoration="background" padding="10">
@@ -47,9 +50,16 @@ defmodule FlutterServerWeb.HelloLive do
             <% end %>
             <TextButton phx-click="inc">
               <Text>
-                Increment margin
+                Increment counter
               </Text>
             </TextButton>
+            <Container margin="10 0 0 0">
+              <TextButton phx-click="dec">
+                <Text>
+                  Decrement counter
+                </Text>
+              </TextButton>
+            </Container>
             <Container margin="10 0 0 0">
               <TextButton type="submit">
                 <Text>
@@ -69,15 +79,20 @@ defmodule FlutterServerWeb.HelloLive do
   def render(%{} = assigns) do
     # This UI renders on the web
     ~H"""
-    <div class="flex w-full h-screen items-center">
-      implement here your web stuff
+    <div class="flex w-full h-screen items-center justify-center">
+      <div>Margin Counter: <%= @counter %> on the web</div>
+      <button phx-click="inc" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+       Increment counter
+      </button>
     </div>
     """
   end
 
   @impl true
   def handle_event("inc", _, socket) do
-    {:noreply, update(socket, :counter, &(&1 + 1))}
+    new_state = update(socket, :counter, &(&1 + 1))
+    FlutterServerWeb.Endpoint.broadcast_from(self(), @topic, "inc", new_state.assigns)
+    {:noreply, new_state}
   end
 
   def handle_event("validate", %{"myfield2" => field}, socket) do
@@ -94,5 +109,9 @@ defmodule FlutterServerWeb.HelloLive do
 
   def bg_color(_counter) do
     "background: blueGrey"
+  end
+
+  def handle_info(msg, socket) do
+    {:noreply, assign(socket, counter: msg.payload.counter)}
   end
 end
