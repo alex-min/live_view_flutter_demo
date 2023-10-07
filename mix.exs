@@ -54,11 +54,7 @@ defmodule FlutterServer.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:live_view_native, "~> 0.1"},
       {:live_view_native_swift_ui, "~> 0.1"},
-      {
-        :live_view_native_flutter_ui,
-        # git: "git@github.com:alex-min/live_view_native_flutter_ui.git"
-        path: "/storage/code/liveview_expriment/live_view_native_flutter_ui"
-      }
+      {:live_view_native_flutter_ui, "~> 0.1"}
     ]
   end
 
