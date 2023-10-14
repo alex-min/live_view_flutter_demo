@@ -1,0 +1,38 @@
+{
+    "buttonTheme": {
+        "buttonColor": "#ff0000",
+        "textTheme": "primary"
+    },
+    "canvasColor": "#ffffff",
+    "disabledColor": "#f8bbd0",
+    "elevatedButtonTheme": {
+        "style": {
+            "backgroundColor": "#ffffff",
+            "side": {
+                "color": "#068a9c",
+                "width": 2.0
+            },
+            "shape": {
+                "type": "rectangle",
+                "borderRadius": 20.0
+            },
+            "elevation": 20.0
+        }
+    },
+    "fontFamily": "metal",
+    "iconTheme": {
+        "color": "#37474f"
+    },
+    "inputDecorationTheme": {
+        "border": {
+            "type": "outline"
+        },
+        "errorStyle": {
+            "color": "#880e4f"
+        },
+        "textMedium": {
+            "color": "#37474f"
+        }
+    },
+    "primaryColor": "#b71c1c"
+}

@@ -1,6 +1,8 @@
 defmodule FlutterServerWeb.HelloLive do
   use Phoenix.LiveView
   use LiveViewNative.LiveView
+  use FlutterServerWeb, :html
+  alias LiveViewNativeFlutterUi.Dart
 
   @topic "hello_live"
 
@@ -8,6 +10,11 @@ defmodule FlutterServerWeb.HelloLive do
   def mount(_params, _session, socket) do
     FlutterServerWeb.Endpoint.subscribe(@topic)
     {:ok, assign(socket, form_field: "", counter: 0, form: to_form(%{}, as: "user"))}
+  end
+
+  def switch_theme(theme) do
+    Dart.switch_theme(theme)
+    |> Dart.save_current_theme()
   end
 
   @impl true
@@ -48,26 +55,44 @@ defmodule FlutterServerWeb.HelloLive do
             <% else %>
               <Center><Text>the current margin is even</Text></Center>
             <% end %>
-            <TextButton phx-click="inc">
+            <ElevatedButton phx-click="inc">
               <Text>
                 Increment counter
               </Text>
-            </TextButton>
+            </ElevatedButton>
             <Container margin="10 0 0 0">
-              <TextButton phx-click="dec">
+              <ElevatedButton phx-click={switch_theme("dark")}>
                 <Text>
-                  Decrement counter
+                  Switch dark
                 </Text>
-              </TextButton>
+              </ElevatedButton>
             </Container>
             <Container margin="10 0 0 0">
-              <TextButton type="submit">
+            <ElevatedButton phx-click={switch_theme("light")}>
+              <Text>
+                Switch light
+              </Text>
+            </ElevatedButton>
+          </Container>
+            <Container margin="10 0 0 0">
+              <ElevatedButton type="submit">
                 <Text>
                   Submit form
                 </Text>
-              </TextButton>
+              </ElevatedButton>
             </Container>
+            <link patch={~p"/second-page"}><Text>LINK</Text></link>
             <Text><%= @form_field %></Text>
+              <Container id="to_hide" padding="100 0 100 0" decoration="background: green">
+                <Text>Text to hide</Text>
+              </Container>
+              <Text>something else</Text>
+            <ElevatedButton phx-click={Dart.hide(to: "#to_hide")}>
+              Hide Text
+            </ElevatedButton>
+            <ElevatedButton phx-click={Dart.show(to: "#to_hide")}>
+              Show Text
+            </ElevatedButton>
           </ListView>
         </Form>
       </Container>
@@ -79,11 +104,12 @@ defmodule FlutterServerWeb.HelloLive do
   def render(%{} = assigns) do
     # This UI renders on the web
     ~H"""
-    <div class="flex w-full h-screen items-center justify-center">
+    <div class="flex flex-col w-full h-screen items-center justify-center">
       <div>Margin Counter: <%= @counter %> on the web</div>
       <button phx-click="inc" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
        Increment counter
       </button>
+      <.link patch={~p"/second-page"}>Second page</.link>
     </div>
     """
   end
@@ -108,7 +134,7 @@ defmodule FlutterServerWeb.HelloLive do
   end
 
   def bg_color(_counter) do
-    "background: blueGrey"
+    "background: @theme.colorScheme.background"
   end
 
   def handle_info(msg, socket) do

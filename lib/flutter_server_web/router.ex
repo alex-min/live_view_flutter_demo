@@ -18,6 +18,7 @@ defmodule FlutterServerWeb.Router do
     pipe_through(:browser)
 
     live("/", HelloLive)
+    live("/second-page", SecondPageLive)
   end
 
   # Other scopes may use custom stacks.

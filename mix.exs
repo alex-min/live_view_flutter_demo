@@ -54,7 +54,7 @@ defmodule FlutterServer.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:live_view_native, "~> 0.1"},
       {:live_view_native_swift_ui, "~> 0.1"},
-      {:live_view_native_flutter_ui, "~> 0.1"}
+      {:live_view_native_flutter_ui, "~> 0.1.1"}
     ]
   end
 
