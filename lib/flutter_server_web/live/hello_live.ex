@@ -28,7 +28,7 @@ defmodule FlutterServerWeb.HelloLive do
         <viewBody>
           <Container padding="10">
             <Container padding={10 + @counter} decoration={bg_color(@counter)}>
-              <Text>Margin Countere <%= @counter %></Text>
+              <Text>Margin Counter <%= @counter %></Text>
               <ElevatedButton flutter-click="go_back">go back</ElevatedButton>
             </Container>
             <Row>
