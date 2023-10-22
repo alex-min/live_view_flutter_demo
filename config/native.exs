@@ -2,5 +2,5 @@
 # It is auto-generated when running `mix lvn.install`.
 import Config
 
-# [LiveViewNativeFlutterUi]
-config :live_view_native, plugins: [LiveViewNativeFlutterUi]
+# [LiveViewNativeFlutter]
+config :live_view_native, plugins: [LiveViewNativeFlutter]

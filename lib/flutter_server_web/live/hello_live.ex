@@ -2,7 +2,7 @@ defmodule FlutterServerWeb.HelloLive do
   use Phoenix.LiveView
   use LiveViewNative.LiveView
   use FlutterServerWeb, :html
-  alias LiveViewNativeFlutterUi.Dart
+  alias LiveViewNativeFlutter.Dart
 
   @topic "hello_live"
 
@@ -18,85 +18,34 @@ defmodule FlutterServerWeb.HelloLive do
   end
 
   @impl true
-  def render(%{platform_id: :flutterui} = assigns) do
+  def render(%{platform_id: :flutter} = assigns) do
     # This UI renders on flutter
-    ~FLUTTERUI"""
-    <Scaffold>
-      <AppBar>
-        <title>
-          <Text>Hello Native</Text>
-        </title>
-        <leading>
-        <Icon size="20" name="menu" />
-        </leading>
-      </AppBar>
-      <Container padding={10 + @counter} decoration={bg_color(@counter)}>
-        <Form phx-change="validate" phx-submit="save">
-          <ListView>
-            <Container decoration="background: blue">
-              <TextField decoration="fillColor: white; filled: true" name="myfield" value={"Current margin #{@counter}"}>
-                <icon>
-                  <Container decoration="background" padding="10">
-                    <Icon size="20" name="key" />
-                  </Container>
-                </icon>
-              </TextField>
+    ~FLUTTER"""
+      <flutter>
+        <AppBar>
+          <title>hello</title>
+        </AppBar>
+        <viewBody>
+          <Container padding="10">
+            <Container padding={10 + @counter} decoration={bg_color(@counter)}>
+              <Text>Margin Countere <%= @counter %></Text>
+              <ElevatedButton flutter-click="go_back">go back</ElevatedButton>
             </Container>
-            <Container decoration="background: white" margin="10 0 0 0">
-              <TextField name="myfield2" decoration="fillColor: white; filled: true" value="Second field" />
-            </Container>
-            <Center>
-              <Text style="textTheme: headlineMedium; fontWeight: bold; fontStyle: italic">
-                Current Margin: <%= @counter %>
-              </Text>
-            </Center>
-            <%= if rem(@counter, 2) == 1 do %>
-              <Center><Text>the current margin is odd</Text></Center>
-            <% else %>
-              <Center><Text>the current margin is even</Text></Center>
-            <% end %>
-            <ElevatedButton phx-click="inc">
-              <Text>
-                Increment counter
-              </Text>
-            </ElevatedButton>
-            <Container margin="10 0 0 0">
-              <ElevatedButton phx-click={switch_theme("dark")}>
-                <Text>
-                  Switch dark
-                </Text>
-              </ElevatedButton>
-            </Container>
-            <Container margin="10 0 0 0">
-            <ElevatedButton phx-click={switch_theme("light")}>
-              <Text>
-                Switch light
-              </Text>
-            </ElevatedButton>
-          </Container>
-            <Container margin="10 0 0 0">
-              <ElevatedButton type="submit">
-                <Text>
-                  Submit form
-                </Text>
-              </ElevatedButton>
-            </Container>
-            <link patch={~p"/second-page"}><Text>LINK</Text></link>
-            <Text><%= @form_field %></Text>
-              <Container id="to_hide" padding="100 0 100 0" decoration="background: green">
-                <Text>Text to hide</Text>
+            <Row>
+              <ElevatedButton phx-click={Dart.switch_theme("dark")}>Switch dark theme</ElevatedButton>
+              <Container margin="0 20 0 0">
+                <ElevatedButton phx-click={Dart.switch_theme("light")}>Switch light theme</ElevatedButton>
               </Container>
-              <Text>something else</Text>
-            <ElevatedButton phx-click={Dart.hide(to: "#to_hide")}>
-              Hide Text
-            </ElevatedButton>
-            <ElevatedButton phx-click={Dart.show(to: "#to_hide")}>
-              Show Text
-            </ElevatedButton>
-          </ListView>
-        </Form>
-      </Container>
-    </Scaffold>
+            </Row>
+          </Container>
+        </viewBody>
+        <BottomNavigationBar currentIndex="0" selectedItemColor="blue-500">
+          <BottomNavigationBarIcon name="home" label="Page 1" />
+          <BottomNavigationBarIcon live-patch="/second-page" name="home" label="Page 2" />
+          <BottomNavigationBarIcon phx-click="inc" name="arrow_upward" label="Increment" />
+          <BottomNavigationBarIcon phx-click="dec" name="arrow_downward" label="Decrement" />
+        </BottomNavigationBar>
+      </flutter>
     """
   end
 
@@ -118,6 +67,13 @@ defmodule FlutterServerWeb.HelloLive do
   def handle_event("inc", _, socket) do
     new_state = update(socket, :counter, &(&1 + 1))
     FlutterServerWeb.Endpoint.broadcast_from(self(), @topic, "inc", new_state.assigns)
+    {:noreply, new_state}
+  end
+
+  @impl true
+  def handle_event("dec", _, socket) do
+    new_state = update(socket, :counter, &(&1 - 1))
+    FlutterServerWeb.Endpoint.broadcast_from(self(), @topic, "dec", new_state.assigns)
     {:noreply, new_state}
   end
 

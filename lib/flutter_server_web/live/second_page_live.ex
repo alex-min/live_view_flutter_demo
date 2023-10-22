@@ -6,12 +6,27 @@ defmodule FlutterServerWeb.SecondPageLive do
     {:ok, socket}
   end
 
-  def render(%{platform_id: :flutterui} = assigns) do
+  def render(%{platform_id: :flutter} = assigns) do
     # This UI renders on flutter
-    ~FLUTTERUI"""
-      <Scaffold>
-        <Text flutter-click="go_back">Second page</Text>
-      </Scaffold>
+    ~FLUTTER"""
+      <flutter>
+        <AppBar>
+          <title>second page</title>
+        </AppBar>
+        <viewBody>
+          <Center>
+            <Container>
+              <Text style="textTheme: bodyLarge; fontWeight: bold" flutter-click="go_back">Second page</Text>
+            </Container>
+          </Center>
+        </viewBody>
+        <BottomNavigationBar currentIndex="1" selectedItemColor="blue-500">
+          <BottomNavigationBarIcon live-patch="/" name={"home"} label={"Page 1"} />
+          <BottomNavigationBarIcon  name={"work"} label={"Page 2"} />
+          <BottomNavigationBarIcon name="arrow_upward" label="Increment" />
+          <BottomNavigationBarIcon name="arrow_downward" label="Decrement" />
+        </BottomNavigationBar>
+      </flutter>
     """
   end
 

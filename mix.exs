@@ -27,7 +27,10 @@ defmodule FlutterServer.MixProject do
   defp elixirc_paths(:test), do: ["lib", "test/support"]
 
   defp elixirc_paths(_),
-    do: ["lib"]
+    do: [
+      "lib"
+      # "/storage/code/liveview_expriment/live_view_native_flutter_ui/lib"
+    ]
 
   # Specifies your project dependencies.
   #
@@ -52,9 +55,8 @@ defmodule FlutterServer.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:live_view_native, "~> 0.1"},
-      {:live_view_native_swift_ui, "~> 0.1"},
-      {:live_view_native_flutter_ui, "~> 0.1.1"}
+      {:live_view_native_flutter, "~> 0.1.2"},
+      {:live_view_native, "~> 0.1"}
     ]
   end
 
