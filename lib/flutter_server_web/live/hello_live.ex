@@ -40,10 +40,10 @@ defmodule FlutterServerWeb.HelloLive do
           </Container>
         </viewBody>
         <BottomNavigationBar currentIndex="0" selectedItemColor="blue-500">
-          <BottomNavigationBarIcon name="home" label="Page 1" />
-          <BottomNavigationBarIcon live-patch="/second-page" name="home" label="Page 2" />
-          <BottomNavigationBarIcon phx-click="inc" name="arrow_upward" label="Increment" />
-          <BottomNavigationBarIcon phx-click="dec" name="arrow_downward" label="Decrement" />
+          <BottomNavigationBarItem icon="home" label="Page 1" />
+          <BottomNavigationBarItem live-patch="/second-page" icon="home" label="Page 2" />
+          <BottomNavigationBarItem phx-click="inc" icon="arrow_upward" label="Increment" />
+          <BottomNavigationBarItem phx-click="dec" icon="arrow_downward" label="Decrement" />
         </BottomNavigationBar>
       </flutter>
     """
@@ -55,8 +55,11 @@ defmodule FlutterServerWeb.HelloLive do
     ~H"""
     <div class="flex flex-col w-full h-screen items-center justify-center">
       <div>Margin Counter: <%= @counter %> on the web</div>
-      <button phx-click="inc" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-       Increment counter
+      <button
+        phx-click="inc"
+        class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Increment counter
       </button>
       <.link patch={~p"/second-page"}>Second page</.link>
     </div>

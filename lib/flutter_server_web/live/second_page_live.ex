@@ -21,10 +21,10 @@ defmodule FlutterServerWeb.SecondPageLive do
           </Center>
         </viewBody>
         <BottomNavigationBar currentIndex="1" selectedItemColor="blue-500">
-          <BottomNavigationBarIcon live-patch="/" name={"home"} label={"Page 1"} />
-          <BottomNavigationBarIcon  name={"work"} label={"Page 2"} />
-          <BottomNavigationBarIcon name="arrow_upward" label="Increment" />
-          <BottomNavigationBarIcon name="arrow_downward" label="Decrement" />
+          <BottomNavigationBarItem live-patch="/" icon="home" label="Page 1" />
+          <BottomNavigationBarItem icon="home" label="Page 2" />
+          <BottomNavigationBarItem phx-click="inc" icon="arrow_upward" label="Increment" />
+          <BottomNavigationBarItem phx-click="dec" icon="arrow_downward" label="Decrement" />
         </BottomNavigationBar>
       </flutter>
     """
