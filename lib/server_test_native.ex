@@ -39,7 +39,6 @@ defmodule ServerTestNative do
           :flutter
         ],
         layouts: [
-          swiftui: {ServerTestWeb.Layouts.SwiftUI, :app},
           flutter: {ServerTestWeb.Layouts.Flutter, :app}
         ],
         dispatch_to: &Module.concat/2
