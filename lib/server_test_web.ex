@@ -39,8 +39,11 @@ defmodule ServerTestWeb do
   def controller do
     quote do
       use Phoenix.Controller,
-        formats: [:html, :json],
-        layouts: [html: ServerTestWeb.Layouts]
+        formats: [:html, :json, :flutter],
+        layouts: [
+          html: ServerTestWeb.Layouts,
+          fluttter: ServerTestWeb.Layouts.Flutter
+        ]
 
       use Gettext, backend: ServerTestWeb.Gettext
 

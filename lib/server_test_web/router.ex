@@ -28,7 +28,8 @@ defmodule ServerTestWeb.Router do
   scope "/", ServerTestWeb do
     pipe_through(:browser)
 
-    get("/", PageController, :home)
+    live("/", HelloLive)
+    live("/second-page", SecondPageLive)
   end
 
   # Other scopes may use custom stacks.

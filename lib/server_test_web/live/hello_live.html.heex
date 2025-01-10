@@ -1,0 +1,7 @@
+<div class="flex flex-col w-full h-screen items-center justify-center">
+  <div>Margin Counter: <%= @counter %> on the web</div>
+  <button value="my button" phx-click="inc" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Increment counter
+  </button>
+  <.link patch={~p"/second-page"}>Second page</.link>
+</div>
