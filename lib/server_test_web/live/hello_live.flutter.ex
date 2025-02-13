@@ -10,7 +10,7 @@ defmodule ServerTestWeb.HelloLive.Flutter do
     ~LVN"""
         <Container padding="10">
           <Container padding={10 + @counter} decoration={bg_color(@counter)}>
-            <Text>Margin Counter <%= @counter %></Text>
+            <Text style="color: red">Margin Counter <%= @counter %></Text>
           </Container>
           <Row>
             <Column>

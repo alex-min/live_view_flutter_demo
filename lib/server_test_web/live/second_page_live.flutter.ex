@@ -7,6 +7,7 @@ defmodule ServerTestWeb.SecondPageLive.Flutter do
   def render(assigns) do
     ~LVN"""
       <Text>Second page</Text>
+      <ElevatedButton phx-click={Dart.go_back()}>go back</ElevatedButton>
     """
   end
 end
